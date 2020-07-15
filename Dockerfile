@@ -112,8 +112,9 @@ RUN go mod download
 COPY . .
 RUN make cli server controller repo-server argocd-util
 
-ARG BUILD_ALL_CLIS=true
-RUN if [ "$BUILD_ALL_CLIS" = "true" ] ; then \
+ARG TARGETPLATFORM
+
+RUN if [ "$TARGETPLATFORM" = "linux/amd64" ] ; then \
     make CLI_NAME=argocd-darwin-amd64 GOOS=darwin cli && \
     make CLI_NAME=argocd-windows-amd64.exe GOOS=windows cli \
     ; fi
